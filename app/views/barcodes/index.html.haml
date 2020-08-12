@@ -1,5 +1,9 @@
 .pull-right
   =link_to "Import barcodes", [:import, :barcodes], :class => "btn btn-default"
+.pull-right
+  =button_to "Generate barcodes", [:generate, :barcodes], :class => "btn btn-default"
+.pull-right
+  =button_to "Delete all barcodes", [:destroy_all, :barcodes], :class => "btn btn-default"
 
 %h1
   Barcodes
@@ -10,10 +14,12 @@
       %th Id
       %th Barcode
       %th Source
+      %th Actions
   %tbody
--# TODO
--#     -Barcode.order(:id).each do |barcode|
--#       %tr
--#         %td=barcode.id
--#         %td=barcode.ean8
--#         %td=barcode.source
+    -Barcode.order(:id).each do |barcodeEan8|
+      %tr
+        %td=barcodeEan8.id
+        %td=barcodeEan8.barcode
+        %td=barcodeEan8.source
+        %td
+          =link_to "delete", barcodeEan8, method: :delete, data: {confirm: "Sure?"}
