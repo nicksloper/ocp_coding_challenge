@@ -2,43 +2,25 @@ class BarcodeUploaderService
 
   def self.call(workbook)
     worksheets = workbook.worksheets
-    response = {count: 0, errors: []}
+    response = {count: 0, errors: {}} # returns the count of successfully imported barcodes and any associated error messages
     ActiveRecord::Base.transaction do
       worksheets.each do |worksheet|
         worksheet.each_with_index do |row, i|
-          next if i == 0
+          next if i == 0 || row[0].nil? # skips first row and empty rows
           barcode = row[0].value.to_s
-          if Barcode.create(barcode: barcode, source: 'excel').save
+          validatedResponse = BarcodeValidateService.call(barcode)
+          if validatedResponse[:valid] == true # only saves after validating barcode
+            Barcode.create(barcode: validatedResponse[:barcode], source: 'excel').save!
             response[:count] += 1
           else
-            newBarcode = BarcodePadService.call(barcode)
-            if Barcode.create(barcode: newBarcode, source: 'excel').save
-              response[:count] += 1
-            else
-              response[:errors].push(barcode)
-            end
+            response[:errors][validatedResponse[:barcode]] = validatedResponse[:error] # adds barcode and error message
           end
         end
       end
-      response[:count] = 0 if response[:errors].any?
-      raise ActiveRecord::Rollback if response[:errors].any?
+      response[:count] = 0 if response[:errors].any? # count is 0 if any errors are encountered
+      raise ActiveRecord::Rollback if response[:errors].any? # rollbacks transaction if errors are encountered
     end
     response
   end
 
 end
-
-          # if EAN8.new(barcode).valid? && Barcode.where(barcode: barcode).empty?
-          #   barcodeRecord = Barcode.create(barcode: barcode, source: 'excel')
-          #   barcodeRecord.save!
-          #   response[:count] += 1
-          # else
-          #   newBarcode = BarcodePadService.call(barcode)
-          #   if EAN8.new(newBarcode).valid?
-          #     barcodeRecord = Barcode.create(barcode: newBarcode, source: 'excel')
-          #     response[:errors].push(newBarcode) unless barcodeRecord.save
-          #     response[:count] += 1
-          #   else
-          #     response[:errors].push(newBarcode)
-          #   end
-          # end

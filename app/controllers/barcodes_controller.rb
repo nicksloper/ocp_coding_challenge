@@ -1,46 +1,46 @@
 class BarcodesController < ApplicationController
+
   before_action :find_barcode, only: [:destroy]
 
   def upload
     begin
       workbook = RubyXL::Parser.parse(params['excel'].tempfile)
-    rescue Zip::Error
+    rescue Zip::Error # Invalid file
       flash[:alert] = "Invalid file type. Must be .xlsx"
       return redirect_to action: 'import'
-    rescue NoMethodError
+    rescue NoMethodError # Empty file
       flash[:alert] = "File is empty."
       return redirect_to action: 'import'
     end
-    response = BarcodeUploaderService.call(workbook)
-    if response[:count] > 0
-      flash[:notice] = response[:count].to_s + " barcodes imported!"
-      redirect_to :root
-    else
-      flash[:alert] = "Invalid barcodes found: "
-      response[:errors].each do |error|
-        flash[:alert] += error.to_s + ", "
-      end
-      redirect_to action: 'import'
-    end
-  end
 
-  def import
+    response = BarcodeUploaderService.call(workbook)
+
+    if response[:count] > 0 # Valid barcodes imported.
+      flash[:notice] = "#{response[:count].to_s} barcodes imported!"
+      return redirect_to :root
+    else # Invalid barcodes found
+      flash[:alert] = "Invalid barcodes found: "
+      response[:errors].each do |barcode, error| # Each barcode and associated error message displayed
+        flash[:alert] += barcode + error
+      end
+      return redirect_to action: 'import'
+    end
   end
 
   def generate
     barcode_count = BarcodeGeneratorService.call
-    flash[:notice] = "Generated " + barcode_count.to_s + " barcodes."
-    redirect_to action: 'index' 
+    flash[:notice] = "Generated #{barcode_count.to_s} barcodes."
+    redirect_to :barcodes
   end
 
   def destroy_all
     Barcode.destroy_all
-    redirect_to action: 'index' 
+    redirect_to :barcodes
   end
 
   def destroy
-    @barcode.destroy!
-    redirect_to :barcodes, notice: "Barcode deleted!"
+    code = @barcode.destroy!
+    redirect_to :barcodes, notice: "Barcode #{code.barcode} deleted!"
   end
 
   protected

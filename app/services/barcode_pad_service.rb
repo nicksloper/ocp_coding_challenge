@@ -1,4 +1,6 @@
 class BarcodePadService
+
+  # Returns padded barcode or nil if invalid
   def self.call(barcode)
     return nil if barcode.length > 8
     newBarcode = barcode.rjust(8, '0')
@@ -8,4 +10,5 @@ class BarcodePadService
     return checkSumBarcode if EAN8.new(checkSumBarcode).valid?
     return nil
   end
+
 end
