@@ -30,7 +30,7 @@ class BarcodesController < ApplicationController
   def generate
     barcode_count = BarcodeGeneratorService.call
     flash[:notice] = "Generated #{barcode_count.to_s} barcodes."
-    redirect_to :barcodes
+    redirect_to :root
   end
 
   def destroy_all
