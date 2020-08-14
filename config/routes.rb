@@ -4,6 +4,10 @@ Rails.application.routes.draw do
   resources :barcodes do
     collection do
       get :import
+      post :upload
+      post :generate
+      post :destroy_all
+      delete :destroy
     end
   end
 
