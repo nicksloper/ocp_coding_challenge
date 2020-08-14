@@ -1,13 +1,30 @@
+# development:
+#   adapter: postgresql
+#   host: db
+#   username: postgres
+#   database: barcoder_dev
+#   pool: 100
+
+# test:
+#   adapter: postgresql
+#   host: db
+#   username: postgres
+#   database: barcoder_tst
+#   pool: 100
+
+# Running locally, not in a docker container
 development:
   adapter: postgresql
-  host: db
-  username: postgres
+  host: 127.0.0.1 # <- wsl bug with postgres, changed because docker container got hung up
+  username: tim
+  password: <%= ENV["TMP_DB_PASS"] %>
   database: barcoder_dev
   pool: 100
 
 test:
   adapter: postgresql
-  host: db
-  username: postgres
+  host: 127.0.0.1
+  username: tim
+  password: <%= ENV["TMP_DB_PASS"] %>
   database: barcoder_tst
   pool: 100

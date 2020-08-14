@@ -1,0 +1,6 @@
+<%= simple_form_for @file do |f|%>
+    <%= f.file_field :file, :autofocus => @file.errors.messages.length > 0 ? true : false %>
+    <%= f.error :file %>
+  <%= f.submit "Import Barcodes" %>
+<% end %>
+<!-- Never worked with haml before so using erb here -->

@@ -1,6 +1,11 @@
 .pull-right
   =link_to "Import barcodes", [:import, :barcodes], :class => "btn btn-default"
 
+.pull-right
+  =form_tag generate_barcodes_path, method: 'POST' do
+    =button_tag "Generate barcodes", type: 'submit', class: "btn btn-default"
+/ this could use a loading screen for when the number of barcodes gets long
+
 %h1
   Barcodes
 
@@ -11,9 +16,9 @@
       %th Barcode
       %th Source
   %tbody
--# TODO
--#     -Barcode.order(:id).each do |barcode|
--#       %tr
--#         %td=barcode.id
--#         %td=barcode.ean8
--#         %td=barcode.source
+
+    -Barcode.order(:id).each do |barcode|
+      %tr
+        %td=barcode.id
+        %td=barcode.ean8
+        %td=barcode.source
