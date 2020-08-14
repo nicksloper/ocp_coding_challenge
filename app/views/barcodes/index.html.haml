@@ -11,9 +11,8 @@
       %th Barcode
       %th Source
   %tbody
--# TODO
--#     -Barcode.order(:id).each do |barcode|
--#       %tr
--#         %td=barcode.id
--#         %td=barcode.ean8
--#         %td=barcode.source
+    -Barcode.order(:id).each do |barcode|
+      %tr
+        %td=barcode.id
+        %td=barcode.code
+        %td=barcode.source
