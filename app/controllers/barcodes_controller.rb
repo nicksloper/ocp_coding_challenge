@@ -13,14 +13,14 @@ class BarcodesController < ApplicationController
       return redirect_to action: 'import'
     end
 
-    response = BarcodeUploaderService.call(workbook)
+    response = BarcodeUploaderService.new(workbook).call()
 
-    if response[:count] > 0 # Valid barcodes imported.
-      flash[:notice] = "#{response[:count].to_s} barcodes imported!"
+    if response.count > 0 # Valid barcodes imported.
+      flash[:notice] = "#{response.count.to_s} barcodes imported!"
       return redirect_to :root
     else # Invalid barcodes found
       flash[:alert] = "Invalid barcodes found: "
-      response[:errors].each do |barcode, error| # Each barcode and associated error message displayed
+      response.errors.each do |barcode, error| # Each barcode and associated error message displayed
         flash[:alert] += barcode + error
       end
       return redirect_to action: 'import'
