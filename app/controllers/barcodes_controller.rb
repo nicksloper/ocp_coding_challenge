@@ -24,4 +24,13 @@ class BarcodesController < ApplicationController
       return redirect_to :import_barcodes, alert: "Invalid barcodes found: #{results[:invalid].join(', ')}"
     end
   end
+
+  def generate
+    persisted_barcode_count = Barcodes::GeneratorService.execute.to_i
+    if persisted_barcode_count > 0
+      return redirect_to :root, notice: "#{persisted_barcode_count} #{persisted_barcode_count > 1 ? 'barcodes' : 'barcode'} generated"
+    else
+      return redirect_to :import, alert: "There was an error generating barcodes."
+    end
+  end
 end

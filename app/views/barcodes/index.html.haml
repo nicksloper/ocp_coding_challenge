@@ -1,5 +1,7 @@
 .pull-right
   =link_to "Import barcodes", [:import, :barcodes], :class => "btn btn-default"
+.pull-right
+  =link_to "Generate new barcodes", [:generate, :barcodes], :method => :post, :class => "btn btn-default"
 
 %h1
   Barcodes
