@@ -12,7 +12,7 @@ class Barcodes::ValidatorService < ServiceObject
   end
 
   def barcode_is_valid?
-    return false if barcode_is_duplicate? || barcode_ean8_is_invalid?
+    return false if barcode_is_duplicate? || barcode_ean8_is_invalid? || barcode_is_too_long?
     return true
   end
 
@@ -22,5 +22,9 @@ class Barcodes::ValidatorService < ServiceObject
 
   def barcode_ean8_is_invalid?
     return !EAN8.new(barcode).valid?
+  end
+
+  def barcode_is_too_long?
+    return barcode.length > 8
   end
 end

@@ -19,10 +19,15 @@ class Barcodes::ParseBarcodesFromFileService < ServiceObject
       barcode = row[0].value.to_s
       next if barcode.blank?
 
+      barcode = pad_incomplete_barcode(barcode)
       filter_barcode(barcode)
     end
 
     return results
+  end
+
+  def pad_incomplete_barcode(barcode)
+    return Barcodes::PadIncompleteBarcodeService.execute(barcode: barcode)
   end
 
   def filter_barcode(barcode)
