@@ -1,5 +1,7 @@
 .pull-right
   =link_to "Import barcodes", [:import, :barcodes], :class => "btn btn-default"
+.pull-right
+  =link_to "Generate new barcodes", [:generate, :barcodes], :method => :post, :class => "btn btn-default"
 
 %h1
   Barcodes
@@ -11,9 +13,8 @@
       %th Barcode
       %th Source
   %tbody
--# TODO
--#     -Barcode.order(:id).each do |barcode|
--#       %tr
--#         %td=barcode.id
--#         %td=barcode.ean8
--#         %td=barcode.source
+    -Barcode.order(:id).each do |barcode|
+      %tr
+        %td=barcode.id
+        %td=barcode.code
+        %td=barcode.source

@@ -1,0 +1,13 @@
+:css
+  form label.required:after {
+    color: red;
+    content: " *"
+  }
+  label.error {
+    color: red;
+  }
+
+=form_with(:url => {:action => "upload"}, :multipart => true) do |f|
+  =label_tag :file, "File", :class => "required #{'error' if params[:file_error].present?}"
+  =file_field_tag "excel_file"
+  =f.submit "Upload", :class => "btn btn-primary"
