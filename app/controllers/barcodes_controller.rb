@@ -9,7 +9,7 @@ class BarcodesController < ApplicationController
     if params[:excelFile] == "" || params[:excelFile][-4..-1] != 'xlsx'
       redirect_to '/barcodes/new?error=true', alert: "Please select an excel file to upload"
     else
-      file = './doc/task1_barcodes.xlsx'
+      file = './doc/task2_barcodes.xlsx'
       codes = BarcodeValidatorService.new.validate(file)
       if codes[:invalid_codes].count > 0
         redirect_to new_barcode_path, alert: "Invalid barcodes found: #{codes[:invalid_codes].join(", ")}"
