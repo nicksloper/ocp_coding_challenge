@@ -1,9 +1,8 @@
 Rails.application.routes.draw do
   resources :users
 
-  resources :barcodes, except: [:show] do
+  resources :barcodes do
     collection do
-      post :generate
       post :import
     end
   end

@@ -9,5 +9,5 @@ test:
   adapter: postgresql
   host: db
   username: postgres
-  database: barcoder_tst
+  database: barcoder_dev
   pool: 100

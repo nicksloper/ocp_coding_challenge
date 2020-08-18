@@ -32,4 +32,6 @@ end
 group :development, :test do
   gem "byebug"
   gem 'pry'
+  gem 'shoulda-matchers'
+  gem 'capybara'
 end
