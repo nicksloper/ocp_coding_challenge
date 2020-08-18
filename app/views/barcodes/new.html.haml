@@ -1,0 +1,13 @@
+%h1
+  Import Barcodes
+
+%div(class="barcode-form")
+  = form_tag import_barcodes_path, :method => :post do
+    = label_tag "Enter Excel File:"
+    %br
+    - if @error == true
+      %div(class="error")
+        = text_field_tag "excelFile", ""
+    - else
+      = text_field_tag "excelFile", ""
+    = submit_tag "Submit"

@@ -7,7 +7,7 @@ ENV MAKEFLAGS "-j$(nproc)"
 RUN apt-get update -qq
 RUN apt-get dist-upgrade -y
 
-RUN groupadd --gid 1000 web && useradd --create-home --uid 1000 --gid 1000 --shell /bin/bash web
+RUN useradd --create-home --uid 501 --gid 20 --shell /bin/bash web
 
 RUN apt-get install -y locales-all build-essential
 
