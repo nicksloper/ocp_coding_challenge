@@ -8,7 +8,7 @@ RSpec.describe 'Barcode validator service' do
       codes = BarcodeValidatorService.new.validate(file)
       expect(codes[:valid_codes].length).to eq(4)
       expect(codes[:invalid_codes].length).to eq(1)
-      expect(codes[:invalid_codes]).to include("1234567")
+      expect(codes[:invalid_codes]).to include("12345678")
     end
   end
 
