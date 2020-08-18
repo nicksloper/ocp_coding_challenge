@@ -1,6 +1,27 @@
+# My thoughts/ struggles
+
+ * Fun little project, exposed me to a couple new things, docker, RubyXL,
+    EAN8, HAML, collection routes.
+ * First time working inside of a docker container. For me everything ran
+   a little slower ( test suite, getting up and running on localhost, installing
+      new gems )
+ * I initially wrote out a method to complete the ean8, didn't look at the
+   docs or the doc/code_snippet closely enough to see the built in method. 
+   It was kind of interesting to see how that last digit is determined.
+
+ To be continued/refactored:
+ * Wasn't sure of the best approach to highlight the input field for an invalid
+ submission so I went through a query param in the route and css class. This could
+ definitely be done cleaner.
+ * I think a great addition in trying to import a file with a couple invalid codes
+ would be a "import the valid X number of codes" anyway button.
+ * Add some feature testing, make sure buttons are working + routing correctly
+ * Add more sad path testing
+
+
 # Setup
 
-The Dockerfile expects your local user to have uid 1000 and gid 1000. If they are different update the Dockerfile accordingly. 
+The Dockerfile expects your local user to have uid 1000 and gid 1000. If they are different update the Dockerfile accordingly.
 
 Initial setup:
 * mkdir -p tmp/bundle
