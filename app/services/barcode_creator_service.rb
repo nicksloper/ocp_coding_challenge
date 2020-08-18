@@ -1,8 +1,8 @@
 class BarcodeCreatorService
 
-  def create_codes(valid_codes)
+  def create_codes(valid_codes, source)
       valid_codes.each do |code|
-        Barcode.create(code: code, source: "excel")
+        Barcode.create(code: code, source: source)
       end
   end
 

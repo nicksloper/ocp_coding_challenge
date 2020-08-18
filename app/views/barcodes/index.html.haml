@@ -1,19 +1,18 @@
 .pull-right
-  =link_to "Import barcodes", new_barcode_path, :class => "btn btn-default"
+  =link_to "Import Barcodes", new_barcode_path, :class => "btn btn-default"
+  =link_to "Generate New Barcodes", generate_barcodes_path, method: :post, :class => "btn btn-default"
 
 %h1
   Barcodes
 
 %table.table.table-striped
-  %thead
+  %tbody
     %tr
       %th Id
       %th Barcode
       %th Source
-  %tbody
--# TODO
--#     -Barcode.order(:id).each do |barcode|
--#       %tr
--#         %td=barcode.id
--#         %td=barcode.ean8
--#         %td=barcode.source
+    - @barcodes.each do |barcode|
+      %tr
+        %td= barcode.id
+        %td= barcode.code
+        %td= barcode.source
